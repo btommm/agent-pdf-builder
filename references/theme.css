@@ -1,0 +1,122 @@
+/* Dossier theme — visual contract for PDF and optional HTML preview.
+   Agents must use these tokens. Do not invent a parallel palette. */
+
+:root {
+  --navy: #0B1F33;
+  --navy-2: #13293D;
+  --steel: #4A5560;
+  --silver: #C5C9CE;
+  --red: #8B1E1E;
+  --row-alt: #E8EDF1;
+  --rule: #1C3348;
+  --line: #C9D2DA;
+  --paper: #FFFFFF;
+  --header-h: 0.42in;
+  --accent-h: 0.04in;
+  --footer-h: 0.38in;
+  --margin-x: 0.65in;
+  --margin-top: 0.62in;
+  --margin-bottom: 0.55in;
+  --font: "Times New Roman", Times, serif;
+}
+
+@page {
+  size: letter;
+  margin: 0.62in 0.65in 0.55in 0.65in;
+}
+
+html, body {
+  background: var(--paper);
+  color: var(--navy-2);
+  font-family: var(--font);
+  font-size: 9.5pt;
+  line-height: 13pt;
+}
+
+.dossier-header {
+  position: running(header);
+  background: var(--navy);
+  color: #fff;
+  height: var(--header-h);
+  border-bottom: var(--accent-h) solid var(--red);
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.dossier-header .right {
+  font-weight: 400;
+  font-size: 8pt;
+}
+
+.dossier-footer {
+  position: running(footer);
+  background: var(--navy);
+  color: var(--silver);
+  height: var(--footer-h);
+  font-size: 8pt;
+}
+
+h1 {
+  color: var(--navy);
+  font-size: 16pt;
+  line-height: 20pt;
+  font-weight: 700;
+  margin: 0 0 6pt 0;
+}
+
+h2 {
+  color: var(--navy);
+  font-size: 12pt;
+  line-height: 16pt;
+  font-weight: 700;
+  margin: 10pt 0 4pt 0;
+}
+
+.small, caption {
+  color: var(--steel);
+  font-size: 8pt;
+  line-height: 11pt;
+}
+
+hr.section {
+  border: 0;
+  border-top: 0.8pt solid var(--rule);
+  margin: 2pt 0 8pt 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8pt;
+}
+
+thead th {
+  background: var(--navy);
+  color: #fff;
+  font-weight: 700;
+  text-align: left;
+  padding: 3.5pt 5pt;
+  border-bottom: 0.5pt solid var(--red);
+}
+
+tbody td {
+  padding: 3.5pt 5pt;
+  border-bottom: 0.25pt solid var(--line);
+  color: var(--navy-2);
+  vertical-align: middle;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--row-alt);
+}
+
+.blank {
+  color: var(--steel);
+}
+
+.callout {
+  font-style: italic;
+  color: var(--navy-2);
+  margin: 4pt 8pt 8pt 8pt;
+}
