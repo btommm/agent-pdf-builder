@@ -25,12 +25,34 @@
   margin: 0.62in 0.65in 0.55in 0.65in;
 }
 
+@page cover {
+  size: letter;
+  margin: 0;
+}
+
 html, body {
   background: var(--paper);
   color: var(--navy-2);
   font-family: var(--font);
   font-size: 9.5pt;
   line-height: 13pt;
+}
+
+.cover {
+  page: cover;
+  background: var(--navy);
+  color: #fff;
+  min-height: 11in;
+  padding: 0.85in;
+  box-sizing: border-box;
+  page-break-after: always;
+}
+
+.cover-title {
+  color: #fff;
+  font-size: 28pt;
+  line-height: 34pt;
+  font-weight: 700;
 }
 
 .dossier-header {

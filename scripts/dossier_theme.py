@@ -112,7 +112,7 @@ def _wrap(text, max_chars):
     return lines or [""]
 
 
-def header_footer_fn(owner, kind, year, classification, constraint):
+def header_footer_fn(owner, kind, year, classification, constraint, page_offset=0):
     left = f"{owner}  \u00b7  {kind}".upper()
     right = f"{year}  \u00b7  {classification}".upper()
 
@@ -132,7 +132,7 @@ def header_footer_fn(owner, kind, year, classification, constraint):
         canvas.setFillColor(SILVER)
         canvas.setFont("Times-Roman", 8)
         canvas.drawString(0.65 * inch, 0.16 * inch, constraint)
-        canvas.drawRightString(PAGE_W - 0.65 * inch, 0.16 * inch, f"Page {doc.page}")
+        canvas.drawRightString(PAGE_W - 0.65 * inch, 0.16 * inch, f"Page {doc.page - page_offset}")
         canvas.restoreState()
 
     return _draw
@@ -186,3 +186,23 @@ def build_doc(path, title, author="Dossier"):
         title=title,
         author=author,
     )
+
+
+def assemble(path, *, owner, kind, year, classification, constraint, title,
+             subtitle="", prepared_for="", prepared_by="", date="",
+             author="Dossier", body):
+    """Navy title page, then body chrome. Cover is unnumbered; first body page is Page 1."""
+    doc = build_doc(path, title, author)
+    cover = cover_page_fn(
+        title=title,
+        subtitle=subtitle,
+        prepared_for=prepared_for,
+        prepared_by=prepared_by,
+        date=date,
+        confidentiality=classification,
+    )
+    chrome = header_footer_fn(
+        owner, kind, year, classification, constraint, page_offset=1,
+    )
+    doc.build([cover_break()] + list(body), onFirstPage=cover, onLaterPages=chrome)
+    return path
