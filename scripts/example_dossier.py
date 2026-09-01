@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-"""One-page fixture proving the theme module renders."""
 import sys
 from pathlib import Path
 
@@ -8,8 +7,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from reportlab.lib.units import inch
 from reportlab.platypus import Paragraph, Spacer
 from dossier_theme import (
-    build_doc, styles, header_footer_fn, section_rule,
-    make_table, blank_field, checkbox,
+    build_doc, styles, header_footer_fn, cover_page_fn, cover_break,
+    section_rule, make_table, blank_field, checkbox,
 )
 
 OUT = ROOT / "artifacts" / "dossier_theme_fixture.pdf"
@@ -19,10 +18,19 @@ def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     sty = styles()
     doc = build_doc(str(OUT), title="Dossier Theme Fixture", author="dossier-pdf")
+    cover = cover_page_fn(
+        title="Dossier theme fixture",
+        subtitle="Agents copy this chrome. Domain content replaces the table.",
+        prepared_for="This league",
+        prepared_by="OWNER",
+        date="2026-09-01",
+        confidentiality="Internal",
+    )
     chrome = header_footer_fn(
         "OWNER", "DOCUMENT KIND", "2026", "INTERNAL", "Draft only. Do not submit."
     )
     story = [
+        cover_break(),
         Paragraph("Dossier theme fixture", sty["H1"]),
         Paragraph("Agents copy this chrome. Domain content replaces the table.", sty["Small"]),
         section_rule(),
@@ -42,7 +50,7 @@ def main():
         blank_field("Unknown fact from source system"),
         checkbox("Confirm owner name before shipping."),
     ]
-    doc.build(story, onFirstPage=chrome, onLaterPages=chrome)
+    doc.build(story, onFirstPage=cover, onLaterPages=chrome)
     print("Wrote", OUT)
 
 
